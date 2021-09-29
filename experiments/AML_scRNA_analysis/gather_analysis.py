@@ -1,7 +1,7 @@
 
 from ..utilities.pipeline_setup import get_task_count
 from ..utilities.misc import compare_muts
-from ..subgrouping_test.gather_test import calculate_auc
+from ..utilities.metrics import calc_auc
 from .utils import load_scRNA_expr
 
 import os
