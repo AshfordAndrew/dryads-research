@@ -231,7 +231,7 @@ def main():
     auc_dict = {
         'all': pd.Series(dict(zip(use_muts, Parallel(
             n_jobs=12, prefer='threads', pre_dispatch=120)(
-            delayed(calculate_auc)(
+            delayed(calc_auc)(
                 pheno_dict[mtype],
                 np.vstack(pred_df.loc[mtype][train_samps].values)
                 )
@@ -243,7 +243,7 @@ def main():
         'CV': pd.DataFrame.from_records(
             tuple(zip(cycle(use_muts), Parallel(
                 n_jobs=12, prefer='threads', pre_dispatch=120)(
-                delayed(calculate_auc)(
+                delayed(calc_auc)(
                     pheno_dict[mtype],
                     np.vstack(pred_df.loc[
                                   mtype][train_samps].values)[:, cv_id]
@@ -257,7 +257,7 @@ def main():
         # sample across CV runs
         'mean': pd.Series(dict(zip(use_muts, Parallel(
             n_jobs=12, prefer='threads', pre_dispatch=120)(
-                delayed(calculate_auc)(
+                delayed(calc_auc)(
                     pheno_dict[mtype],
                     np.vstack(pred_df.loc[
                                   mtype][train_samps].values).mean(axis=1)
@@ -282,7 +282,7 @@ def main():
     conf_df = pd.DataFrame.from_records(
         tuple(zip(cycle(use_muts), Parallel(
             n_jobs=12, prefer='threads', pre_dispatch=120)(
-            delayed(calculate_auc)(
+            delayed(calc_auc)(
                 pheno_dict[mtype][sub_indx],
                 np.vstack(pred_df.loc[
                               mtype][train_samps[sub_indx]].values).mean(
